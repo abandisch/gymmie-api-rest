@@ -1,0 +1,27 @@
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  name: String!
+  email: String! @unique
+  password: String!
+}
+
+type Set {
+  id: ID! @unique
+  setNo: Int!
+  reps: Int!
+  weight: String!
+}
+
+type Exercise {
+  id: ID! @unique
+  name: String!
+  sets: [Set!]!
+}
+
+type Session {
+  id: ID! @unique
+  name: String!
+  date: DateTime!,
+  exercises: [Exercise!]!
+}

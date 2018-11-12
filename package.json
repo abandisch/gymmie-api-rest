@@ -21,16 +21,21 @@
   },
   "homepage": "https://github.com/abandisch/gymmie-api#readme",
   "dependencies": {
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "graphql": "^14.0.2",
     "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "prisma-client-lib": "^1.20.1",
+    "typeforce": "^1.16.0",
+    "typeforce-middleware": "^2.1.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

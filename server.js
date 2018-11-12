@@ -1,7 +1,7 @@
 'use strict'
 
 require('dotenv').config()
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const express = require('express')
 const morgan = require('morgan')
 const passport = require('passport')
@@ -26,19 +26,19 @@ app.use('/gymmie', cors(), gymmieRouter)
 
 // Start / Stop Server
 let server
-function runServer(port = PORT) {
+function runServer (port = PORT) {
   return new Promise((resolve, reject) => {
     server = app.listen(port, () => {
       console.log(`\n  === App is listening on port ${port} ===\n`)
       resolve()
     })
-    .on('error', err => {
-      reject(err)
-    })
+      .on('error', err => {
+        reject(err)
+      })
   })
 }
 
-function closeServer() {
+function closeServer () {
   console.log('\n  === Closing server ===\n')
   return new Promise((resolve, reject) => {
     server.close(err => {
@@ -50,10 +50,8 @@ function closeServer() {
   })
 }
 
-
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err))
 }
 
-
-module.exports = {app, runServer, closeServer}
+module.exports = { app, runServer, closeServer }
