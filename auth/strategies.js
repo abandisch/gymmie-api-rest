@@ -1,16 +1,22 @@
 'use strict'
 const { Strategy: LocalStrategy } = require('passport-local')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
-const { JWT_SECRET } = require('../config')
+const jwt = require('jsonwebtoken')
+const { User } = require('../database')
+const { JWT_SECRET, JWT_EXPIRY } = require('../config')
 
-const { User, UserPasswords } = require('../_db')
+const createAuthToken = function (user) {
+  return jwt.sign({ user }, JWT_SECRET, {
+    subject: user.email,
+    expiresIn: JWT_EXPIRY,
+    algorithm: 'HS256'
+  })
+}
 
-const localStrategy = new LocalStrategy({ usernameField: 'email' }, (email, password, callback) => {
-  const user = User.findByEmail(email)
+const localStrategy = new LocalStrategy({ usernameField: 'email' }, async (email, password, callback) => {
+  const user = await User.authenticate(email, password)
   if (!user) return callback(null, false)
-  if (!UserPasswords.validate(user.id, password)) return callback(null, false)
-
-  return callback(null, user)
+  return callback(null, createAuthToken(user))
 })
 
 const jwtStrategy = new JwtStrategy(
