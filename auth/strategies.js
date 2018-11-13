@@ -16,7 +16,7 @@ const createAuthToken = function (user) {
 const localStrategy = new LocalStrategy({ usernameField: 'email' }, async (email, password, callback) => {
   const user = await User.authenticate(email, password)
   if (!user) return callback(null, false)
-  return callback(null, createAuthToken(user))
+  return callback(null, { authToken: createAuthToken(user), id: user.id })
 })
 
 const jwtStrategy = new JwtStrategy(
@@ -26,7 +26,7 @@ const jwtStrategy = new JwtStrategy(
     algorithms: ['HS256']
   },
   (payload, done) => {
-    done(null, payload.gymGoer)
+    done(null, payload.user)
   }
 )
 

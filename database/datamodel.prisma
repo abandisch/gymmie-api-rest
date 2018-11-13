@@ -4,10 +4,12 @@ type User {
   name: String!
   email: String! @unique
   password: String!
+  sessions: [Session!]! @relation(name: "UserSessions" onDelete: CASCADE)
 }
 
 type Set {
   id: ID! @unique
+  exercise: Exercise! @relation(name: "ExerciseSets")
   setNo: Int!
   reps: Int!
   weight: String!
@@ -15,13 +17,15 @@ type Set {
 
 type Exercise {
   id: ID! @unique
+  session: Session! @relation(name: "SessionExercises")
   name: String!
-  sets: [Set!]!
+  sets: [Set!]! @relation(name: "ExerciseSets" onDelete: CASCADE)
 }
 
 type Session {
   id: ID! @unique
-  name: String!
-  date: DateTime!,
-  exercises: [Exercise!]!
+  user: User! @relation(name: "UserSessions")
+  name: String! @default(value: "New Session")
+  createdAt: DateTime!
+  exercises: [Exercise!]! @relation(name: "SessionExercises" onDelete: CASCADE)
 }

@@ -23,6 +23,7 @@ scalar DateTime
 
 type Exercise {
   id: ID!
+  session: Session!
   name: String!
   sets(where: SetWhereInput, orderBy: SetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Set!]
 }
@@ -34,13 +35,29 @@ type ExerciseConnection {
 }
 
 input ExerciseCreateInput {
+  session: SessionCreateOneWithoutExercisesInput!
   name: String!
-  sets: SetCreateManyInput
+  sets: SetCreateManyWithoutExerciseInput
 }
 
-input ExerciseCreateManyInput {
-  create: [ExerciseCreateInput!]
+input ExerciseCreateManyWithoutSessionInput {
+  create: [ExerciseCreateWithoutSessionInput!]
   connect: [ExerciseWhereUniqueInput!]
+}
+
+input ExerciseCreateOneWithoutSetsInput {
+  create: ExerciseCreateWithoutSetsInput
+  connect: ExerciseWhereUniqueInput
+}
+
+input ExerciseCreateWithoutSessionInput {
+  name: String!
+  sets: SetCreateManyWithoutExerciseInput
+}
+
+input ExerciseCreateWithoutSetsInput {
+  session: SessionCreateOneWithoutExercisesInput!
+  name: String!
 }
 
 type ExerciseEdge {
@@ -82,38 +99,56 @@ input ExerciseSubscriptionWhereInput {
   NOT: [ExerciseSubscriptionWhereInput!]
 }
 
-input ExerciseUpdateDataInput {
-  name: String
-  sets: SetUpdateManyInput
-}
-
 input ExerciseUpdateInput {
+  session: SessionUpdateOneRequiredWithoutExercisesInput
   name: String
-  sets: SetUpdateManyInput
-}
-
-input ExerciseUpdateManyInput {
-  create: [ExerciseCreateInput!]
-  update: [ExerciseUpdateWithWhereUniqueNestedInput!]
-  upsert: [ExerciseUpsertWithWhereUniqueNestedInput!]
-  delete: [ExerciseWhereUniqueInput!]
-  connect: [ExerciseWhereUniqueInput!]
-  disconnect: [ExerciseWhereUniqueInput!]
+  sets: SetUpdateManyWithoutExerciseInput
 }
 
 input ExerciseUpdateManyMutationInput {
   name: String
 }
 
-input ExerciseUpdateWithWhereUniqueNestedInput {
-  where: ExerciseWhereUniqueInput!
-  data: ExerciseUpdateDataInput!
+input ExerciseUpdateManyWithoutSessionInput {
+  create: [ExerciseCreateWithoutSessionInput!]
+  delete: [ExerciseWhereUniqueInput!]
+  connect: [ExerciseWhereUniqueInput!]
+  disconnect: [ExerciseWhereUniqueInput!]
+  update: [ExerciseUpdateWithWhereUniqueWithoutSessionInput!]
+  upsert: [ExerciseUpsertWithWhereUniqueWithoutSessionInput!]
 }
 
-input ExerciseUpsertWithWhereUniqueNestedInput {
+input ExerciseUpdateOneRequiredWithoutSetsInput {
+  create: ExerciseCreateWithoutSetsInput
+  update: ExerciseUpdateWithoutSetsDataInput
+  upsert: ExerciseUpsertWithoutSetsInput
+  connect: ExerciseWhereUniqueInput
+}
+
+input ExerciseUpdateWithoutSessionDataInput {
+  name: String
+  sets: SetUpdateManyWithoutExerciseInput
+}
+
+input ExerciseUpdateWithoutSetsDataInput {
+  session: SessionUpdateOneRequiredWithoutExercisesInput
+  name: String
+}
+
+input ExerciseUpdateWithWhereUniqueWithoutSessionInput {
   where: ExerciseWhereUniqueInput!
-  update: ExerciseUpdateDataInput!
-  create: ExerciseCreateInput!
+  data: ExerciseUpdateWithoutSessionDataInput!
+}
+
+input ExerciseUpsertWithoutSetsInput {
+  update: ExerciseUpdateWithoutSetsDataInput!
+  create: ExerciseCreateWithoutSetsInput!
+}
+
+input ExerciseUpsertWithWhereUniqueWithoutSessionInput {
+  where: ExerciseWhereUniqueInput!
+  update: ExerciseUpdateWithoutSessionDataInput!
+  create: ExerciseCreateWithoutSessionInput!
 }
 
 input ExerciseWhereInput {
@@ -131,6 +166,7 @@ input ExerciseWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  session: SessionWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -221,8 +257,9 @@ type Query {
 
 type Session {
   id: ID!
+  user: User!
   name: String!
-  date: DateTime!
+  createdAt: DateTime!
   exercises(where: ExerciseWhereInput, orderBy: ExerciseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Exercise!]
 }
 
@@ -233,9 +270,29 @@ type SessionConnection {
 }
 
 input SessionCreateInput {
-  name: String!
-  date: DateTime!
-  exercises: ExerciseCreateManyInput
+  user: UserCreateOneWithoutSessionsInput!
+  name: String
+  exercises: ExerciseCreateManyWithoutSessionInput
+}
+
+input SessionCreateManyWithoutUserInput {
+  create: [SessionCreateWithoutUserInput!]
+  connect: [SessionWhereUniqueInput!]
+}
+
+input SessionCreateOneWithoutExercisesInput {
+  create: SessionCreateWithoutExercisesInput
+  connect: SessionWhereUniqueInput
+}
+
+input SessionCreateWithoutExercisesInput {
+  user: UserCreateOneWithoutSessionsInput!
+  name: String
+}
+
+input SessionCreateWithoutUserInput {
+  name: String
+  exercises: ExerciseCreateManyWithoutSessionInput
 }
 
 type SessionEdge {
@@ -248,8 +305,6 @@ enum SessionOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  date_ASC
-  date_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -259,7 +314,7 @@ enum SessionOrderByInput {
 type SessionPreviousValues {
   id: ID!
   name: String!
-  date: DateTime!
+  createdAt: DateTime!
 }
 
 type SessionSubscriptionPayload {
@@ -281,14 +336,55 @@ input SessionSubscriptionWhereInput {
 }
 
 input SessionUpdateInput {
+  user: UserUpdateOneRequiredWithoutSessionsInput
   name: String
-  date: DateTime
-  exercises: ExerciseUpdateManyInput
+  exercises: ExerciseUpdateManyWithoutSessionInput
 }
 
 input SessionUpdateManyMutationInput {
   name: String
-  date: DateTime
+}
+
+input SessionUpdateManyWithoutUserInput {
+  create: [SessionCreateWithoutUserInput!]
+  delete: [SessionWhereUniqueInput!]
+  connect: [SessionWhereUniqueInput!]
+  disconnect: [SessionWhereUniqueInput!]
+  update: [SessionUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [SessionUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input SessionUpdateOneRequiredWithoutExercisesInput {
+  create: SessionCreateWithoutExercisesInput
+  update: SessionUpdateWithoutExercisesDataInput
+  upsert: SessionUpsertWithoutExercisesInput
+  connect: SessionWhereUniqueInput
+}
+
+input SessionUpdateWithoutExercisesDataInput {
+  user: UserUpdateOneRequiredWithoutSessionsInput
+  name: String
+}
+
+input SessionUpdateWithoutUserDataInput {
+  name: String
+  exercises: ExerciseUpdateManyWithoutSessionInput
+}
+
+input SessionUpdateWithWhereUniqueWithoutUserInput {
+  where: SessionWhereUniqueInput!
+  data: SessionUpdateWithoutUserDataInput!
+}
+
+input SessionUpsertWithoutExercisesInput {
+  update: SessionUpdateWithoutExercisesDataInput!
+  create: SessionCreateWithoutExercisesInput!
+}
+
+input SessionUpsertWithWhereUniqueWithoutUserInput {
+  where: SessionWhereUniqueInput!
+  update: SessionUpdateWithoutUserDataInput!
+  create: SessionCreateWithoutUserInput!
 }
 
 input SessionWhereInput {
@@ -306,6 +402,7 @@ input SessionWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  user: UserWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -320,14 +417,14 @@ input SessionWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime!]
-  date_not_in: [DateTime!]
-  date_lt: DateTime
-  date_lte: DateTime
-  date_gt: DateTime
-  date_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   exercises_every: ExerciseWhereInput
   exercises_some: ExerciseWhereInput
   exercises_none: ExerciseWhereInput
@@ -342,6 +439,7 @@ input SessionWhereUniqueInput {
 
 type Set {
   id: ID!
+  exercise: Exercise!
   setNo: Int!
   reps: Int!
   weight: String!
@@ -354,14 +452,21 @@ type SetConnection {
 }
 
 input SetCreateInput {
+  exercise: ExerciseCreateOneWithoutSetsInput!
   setNo: Int!
   reps: Int!
   weight: String!
 }
 
-input SetCreateManyInput {
-  create: [SetCreateInput!]
+input SetCreateManyWithoutExerciseInput {
+  create: [SetCreateWithoutExerciseInput!]
   connect: [SetWhereUniqueInput!]
+}
+
+input SetCreateWithoutExerciseInput {
+  setNo: Int!
+  reps: Int!
+  weight: String!
 }
 
 type SetEdge {
@@ -409,25 +514,11 @@ input SetSubscriptionWhereInput {
   NOT: [SetSubscriptionWhereInput!]
 }
 
-input SetUpdateDataInput {
-  setNo: Int
-  reps: Int
-  weight: String
-}
-
 input SetUpdateInput {
+  exercise: ExerciseUpdateOneRequiredWithoutSetsInput
   setNo: Int
   reps: Int
   weight: String
-}
-
-input SetUpdateManyInput {
-  create: [SetCreateInput!]
-  update: [SetUpdateWithWhereUniqueNestedInput!]
-  upsert: [SetUpsertWithWhereUniqueNestedInput!]
-  delete: [SetWhereUniqueInput!]
-  connect: [SetWhereUniqueInput!]
-  disconnect: [SetWhereUniqueInput!]
 }
 
 input SetUpdateManyMutationInput {
@@ -436,15 +527,30 @@ input SetUpdateManyMutationInput {
   weight: String
 }
 
-input SetUpdateWithWhereUniqueNestedInput {
-  where: SetWhereUniqueInput!
-  data: SetUpdateDataInput!
+input SetUpdateManyWithoutExerciseInput {
+  create: [SetCreateWithoutExerciseInput!]
+  delete: [SetWhereUniqueInput!]
+  connect: [SetWhereUniqueInput!]
+  disconnect: [SetWhereUniqueInput!]
+  update: [SetUpdateWithWhereUniqueWithoutExerciseInput!]
+  upsert: [SetUpsertWithWhereUniqueWithoutExerciseInput!]
 }
 
-input SetUpsertWithWhereUniqueNestedInput {
+input SetUpdateWithoutExerciseDataInput {
+  setNo: Int
+  reps: Int
+  weight: String
+}
+
+input SetUpdateWithWhereUniqueWithoutExerciseInput {
   where: SetWhereUniqueInput!
-  update: SetUpdateDataInput!
-  create: SetCreateInput!
+  data: SetUpdateWithoutExerciseDataInput!
+}
+
+input SetUpsertWithWhereUniqueWithoutExerciseInput {
+  where: SetWhereUniqueInput!
+  update: SetUpdateWithoutExerciseDataInput!
+  create: SetCreateWithoutExerciseInput!
 }
 
 input SetWhereInput {
@@ -462,6 +568,7 @@ input SetWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  exercise: ExerciseWhereInput
   setNo: Int
   setNo_not: Int
   setNo_in: [Int!]
@@ -514,6 +621,7 @@ type User {
   name: String!
   email: String!
   password: String!
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session!]
 }
 
 type UserConnection {
@@ -523,6 +631,18 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  name: String!
+  email: String!
+  password: String!
+  sessions: SessionCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutSessionsInput {
+  create: UserCreateWithoutSessionsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutSessionsInput {
   name: String!
   email: String!
   password: String!
@@ -578,12 +698,31 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  sessions: SessionUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+}
+
+input UserUpdateOneRequiredWithoutSessionsInput {
+  create: UserCreateWithoutSessionsInput
+  update: UserUpdateWithoutSessionsDataInput
+  upsert: UserUpsertWithoutSessionsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutSessionsDataInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UserUpsertWithoutSessionsInput {
+  update: UserUpdateWithoutSessionsDataInput!
+  create: UserCreateWithoutSessionsInput!
 }
 
 input UserWhereInput {
@@ -651,6 +790,9 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  sessions_every: SessionWhereInput
+  sessions_some: SessionWhereInput
+  sessions_none: SessionWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
