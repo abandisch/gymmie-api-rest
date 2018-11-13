@@ -228,15 +228,11 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type SetOrderByInput =
+export type SessionOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "setNo_ASC"
-  | "setNo_DESC"
-  | "reps_ASC"
-  | "reps_DESC"
-  | "weight_ASC"
-  | "weight_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -252,13 +248,15 @@ export type ExerciseOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type SessionOrderByInput =
+export type SetOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "date_ASC"
-  | "date_DESC"
+  | "setNo_ASC"
+  | "setNo_DESC"
+  | "reps_ASC"
+  | "reps_DESC"
+  | "weight_ASC"
+  | "weight_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -280,54 +278,135 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface SetCreateManyInput {
-  create?: SetCreateInput[] | SetCreateInput;
-  connect?: SetWhereUniqueInput[] | SetWhereUniqueInput;
+export interface UserUpsertWithoutSessionsInput {
+  update: UserUpdateWithoutSessionsDataInput;
+  create: UserCreateWithoutSessionsInput;
 }
 
 export type ExerciseWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface ExerciseUpdateDataInput {
+export interface SetUpdateWithoutExerciseDataInput {
+  setNo?: Int;
+  reps?: Int;
+  weight?: String;
+}
+
+export interface SessionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  user?: UserWhereInput;
   name?: String;
-  sets?: SetUpdateManyInput;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  exercises_every?: ExerciseWhereInput;
+  exercises_some?: ExerciseWhereInput;
+  exercises_none?: ExerciseWhereInput;
+  AND?: SessionWhereInput[] | SessionWhereInput;
+  OR?: SessionWhereInput[] | SessionWhereInput;
+  NOT?: SessionWhereInput[] | SessionWhereInput;
 }
 
-export interface SetUpdateWithWhereUniqueNestedInput {
+export interface SetUpsertWithWhereUniqueWithoutExerciseInput {
   where: SetWhereUniqueInput;
-  data: SetUpdateDataInput;
+  update: SetUpdateWithoutExerciseDataInput;
+  create: SetCreateWithoutExerciseInput;
 }
 
-export interface ExerciseUpdateWithWhereUniqueNestedInput {
+export interface ExerciseWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  session?: SessionWhereInput;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  sets_every?: SetWhereInput;
+  sets_some?: SetWhereInput;
+  sets_none?: SetWhereInput;
+  AND?: ExerciseWhereInput[] | ExerciseWhereInput;
+  OR?: ExerciseWhereInput[] | ExerciseWhereInput;
+  NOT?: ExerciseWhereInput[] | ExerciseWhereInput;
+}
+
+export interface UserCreateOneWithoutSessionsInput {
+  create?: UserCreateWithoutSessionsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface ExerciseUpsertWithWhereUniqueWithoutSessionInput {
   where: ExerciseWhereUniqueInput;
-  data: ExerciseUpdateDataInput;
+  update: ExerciseUpdateWithoutSessionDataInput;
+  create: ExerciseCreateWithoutSessionInput;
 }
 
-export interface SetUpdateManyInput {
-  create?: SetCreateInput[] | SetCreateInput;
-  update?:
-    | SetUpdateWithWhereUniqueNestedInput[]
-    | SetUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | SetUpsertWithWhereUniqueNestedInput[]
-    | SetUpsertWithWhereUniqueNestedInput;
-  delete?: SetWhereUniqueInput[] | SetWhereUniqueInput;
+export interface UserCreateWithoutSessionsInput {
+  name: String;
+  email: String;
+  password: String;
+}
+
+export interface ExerciseUpdateManyMutationInput {
+  name?: String;
+}
+
+export interface SetCreateManyWithoutExerciseInput {
+  create?: SetCreateWithoutExerciseInput[] | SetCreateWithoutExerciseInput;
   connect?: SetWhereUniqueInput[] | SetWhereUniqueInput;
-  disconnect?: SetWhereUniqueInput[] | SetWhereUniqueInput;
-}
-
-export interface ExerciseUpdateManyInput {
-  create?: ExerciseCreateInput[] | ExerciseCreateInput;
-  update?:
-    | ExerciseUpdateWithWhereUniqueNestedInput[]
-    | ExerciseUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | ExerciseUpsertWithWhereUniqueNestedInput[]
-    | ExerciseUpsertWithWhereUniqueNestedInput;
-  delete?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
-  connect?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
-  disconnect?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
 }
 
 export interface SetSubscriptionWhereInput {
@@ -341,10 +420,11 @@ export interface SetSubscriptionWhereInput {
   NOT?: SetSubscriptionWhereInput[] | SetSubscriptionWhereInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
+export interface SetCreateWithoutExerciseInput {
+  setNo: Int;
+  reps: Int;
+  weight: String;
+}
 
 export interface ExerciseSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
@@ -357,16 +437,120 @@ export interface ExerciseSubscriptionWhereInput {
   NOT?: ExerciseSubscriptionWhereInput[] | ExerciseSubscriptionWhereInput;
 }
 
-export interface SessionUpdateInput {
+export interface ExerciseUpdateInput {
+  session?: SessionUpdateOneRequiredWithoutExercisesInput;
   name?: String;
-  date?: DateTimeInput;
-  exercises?: ExerciseUpdateManyInput;
+  sets?: SetUpdateManyWithoutExerciseInput;
 }
 
-export interface UserUpdateInput {
+export interface SessionUpsertWithWhereUniqueWithoutUserInput {
+  where: SessionWhereUniqueInput;
+  update: SessionUpdateWithoutUserDataInput;
+  create: SessionCreateWithoutUserInput;
+}
+
+export interface SessionUpdateOneRequiredWithoutExercisesInput {
+  create?: SessionCreateWithoutExercisesInput;
+  update?: SessionUpdateWithoutExercisesDataInput;
+  upsert?: SessionUpsertWithoutExercisesInput;
+  connect?: SessionWhereUniqueInput;
+}
+
+export interface SessionUpdateWithWhereUniqueWithoutUserInput {
+  where: SessionWhereUniqueInput;
+  data: SessionUpdateWithoutUserDataInput;
+}
+
+export interface SessionUpdateWithoutExercisesDataInput {
+  user?: UserUpdateOneRequiredWithoutSessionsInput;
+  name?: String;
+}
+
+export interface SessionUpdateManyWithoutUserInput {
+  create?: SessionCreateWithoutUserInput[] | SessionCreateWithoutUserInput;
+  delete?: SessionWhereUniqueInput[] | SessionWhereUniqueInput;
+  connect?: SessionWhereUniqueInput[] | SessionWhereUniqueInput;
+  disconnect?: SessionWhereUniqueInput[] | SessionWhereUniqueInput;
+  update?:
+    | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    | SessionUpdateWithWhereUniqueWithoutUserInput;
+  upsert?:
+    | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    | SessionUpsertWithWhereUniqueWithoutUserInput;
+}
+
+export interface UserUpdateOneRequiredWithoutSessionsInput {
+  create?: UserCreateWithoutSessionsInput;
+  update?: UserUpdateWithoutSessionsDataInput;
+  upsert?: UserUpsertWithoutSessionsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface SessionCreateWithoutUserInput {
+  name?: String;
+  exercises?: ExerciseCreateManyWithoutSessionInput;
+}
+
+export interface UserUpdateWithoutSessionsDataInput {
   name?: String;
   email?: String;
   password?: String;
+}
+
+export interface SessionCreateManyWithoutUserInput {
+  create?: SessionCreateWithoutUserInput[] | SessionCreateWithoutUserInput;
+  connect?: SessionWhereUniqueInput[] | SessionWhereUniqueInput;
+}
+
+export interface ExerciseCreateWithoutSetsInput {
+  session: SessionCreateOneWithoutExercisesInput;
+  name: String;
+}
+
+export interface SetUpdateManyMutationInput {
+  setNo?: Int;
+  reps?: Int;
+  weight?: String;
+}
+
+export interface SessionUpsertWithoutExercisesInput {
+  update: SessionUpdateWithoutExercisesDataInput;
+  create: SessionCreateWithoutExercisesInput;
+}
+
+export interface ExerciseUpsertWithoutSetsInput {
+  update: ExerciseUpdateWithoutSetsDataInput;
+  create: ExerciseCreateWithoutSetsInput;
+}
+
+export interface SetUpdateManyWithoutExerciseInput {
+  create?: SetCreateWithoutExerciseInput[] | SetCreateWithoutExerciseInput;
+  delete?: SetWhereUniqueInput[] | SetWhereUniqueInput;
+  connect?: SetWhereUniqueInput[] | SetWhereUniqueInput;
+  disconnect?: SetWhereUniqueInput[] | SetWhereUniqueInput;
+  update?:
+    | SetUpdateWithWhereUniqueWithoutExerciseInput[]
+    | SetUpdateWithWhereUniqueWithoutExerciseInput;
+  upsert?:
+    | SetUpsertWithWhereUniqueWithoutExerciseInput[]
+    | SetUpsertWithWhereUniqueWithoutExerciseInput;
+}
+
+export interface ExerciseUpdateOneRequiredWithoutSetsInput {
+  create?: ExerciseCreateWithoutSetsInput;
+  update?: ExerciseUpdateWithoutSetsDataInput;
+  upsert?: ExerciseUpsertWithoutSetsInput;
+  connect?: ExerciseWhereUniqueInput;
+}
+
+export interface SetUpdateWithWhereUniqueWithoutExerciseInput {
+  where: SetWhereUniqueInput;
+  data: SetUpdateWithoutExerciseDataInput;
+}
+
+export interface SessionCreateOneWithoutExercisesInput {
+  create?: SessionCreateWithoutExercisesInput;
+  connect?: SessionWhereUniqueInput;
 }
 
 export interface UserWhereInput {
@@ -434,93 +618,12 @@ export interface UserWhereInput {
   password_not_starts_with?: String;
   password_ends_with?: String;
   password_not_ends_with?: String;
+  sessions_every?: SessionWhereInput;
+  sessions_some?: SessionWhereInput;
+  sessions_none?: SessionWhereInput;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
-}
-
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
-}
-
-export interface ExerciseCreateManyInput {
-  create?: ExerciseCreateInput[] | ExerciseCreateInput;
-  connect?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
-}
-
-export interface SessionWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  date?: DateTimeInput;
-  date_not?: DateTimeInput;
-  date_in?: DateTimeInput[] | DateTimeInput;
-  date_not_in?: DateTimeInput[] | DateTimeInput;
-  date_lt?: DateTimeInput;
-  date_lte?: DateTimeInput;
-  date_gt?: DateTimeInput;
-  date_gte?: DateTimeInput;
-  exercises_every?: ExerciseWhereInput;
-  exercises_some?: ExerciseWhereInput;
-  exercises_none?: ExerciseWhereInput;
-  AND?: SessionWhereInput[] | SessionWhereInput;
-  OR?: SessionWhereInput[] | SessionWhereInput;
-  NOT?: SessionWhereInput[] | SessionWhereInput;
-}
-
-export interface SessionCreateInput {
-  name: String;
-  date: DateTimeInput;
-  exercises?: ExerciseCreateManyInput;
-}
-
-export interface SetUpdateInput {
-  setNo?: Int;
-  reps?: Int;
-  weight?: String;
-}
-
-export interface ExerciseUpdateManyMutationInput {
-  name?: String;
-}
-
-export interface ExerciseUpsertWithWhereUniqueNestedInput {
-  where: ExerciseWhereUniqueInput;
-  update: ExerciseUpdateDataInput;
-  create: ExerciseCreateInput;
-}
-
-export interface SetUpsertWithWhereUniqueNestedInput {
-  where: SetWhereUniqueInput;
-  update: SetUpdateDataInput;
-  create: SetCreateInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -533,86 +636,6 @@ export interface UserSubscriptionWhereInput {
   OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
   NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
-
-export interface UserUpdateManyMutationInput {
-  name?: String;
-  email?: String;
-  password?: String;
-}
-
-export interface SetUpdateManyMutationInput {
-  setNo?: Int;
-  reps?: Int;
-  weight?: String;
-}
-
-export interface ExerciseCreateInput {
-  name: String;
-  sets?: SetCreateManyInput;
-}
-
-export interface SessionUpdateManyMutationInput {
-  name?: String;
-  date?: DateTimeInput;
-}
-
-export interface ExerciseWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  sets_every?: SetWhereInput;
-  sets_some?: SetWhereInput;
-  sets_none?: SetWhereInput;
-  AND?: ExerciseWhereInput[] | ExerciseWhereInput;
-  OR?: ExerciseWhereInput[] | ExerciseWhereInput;
-  NOT?: ExerciseWhereInput[] | ExerciseWhereInput;
-}
-
-export interface ExerciseUpdateInput {
-  name?: String;
-  sets?: SetUpdateManyInput;
-}
-
-export interface SetCreateInput {
-  setNo: Int;
-  reps: Int;
-  weight: String;
-}
-
-export interface SetUpdateDataInput {
-  setNo?: Int;
-  reps?: Int;
-  weight?: String;
-}
-
-export type SetWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
 
 export interface SetWhereInput {
   id?: ID_Input;
@@ -629,6 +652,7 @@ export interface SetWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  exercise?: ExerciseWhereInput;
   setNo?: Int;
   setNo_not?: Int;
   setNo_in?: Int[] | Int;
@@ -664,9 +688,113 @@ export interface SetWhereInput {
   NOT?: SetWhereInput[] | SetWhereInput;
 }
 
+export interface UserUpdateManyMutationInput {
+  name?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface ExerciseCreateOneWithoutSetsInput {
+  create?: ExerciseCreateWithoutSetsInput;
+  connect?: ExerciseWhereUniqueInput;
+}
+
 export type SessionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface SetCreateInput {
+  exercise: ExerciseCreateOneWithoutSetsInput;
+  setNo: Int;
+  reps: Int;
+  weight: String;
+}
+
+export type SetWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface SessionUpdateManyMutationInput {
+  name?: String;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface SessionCreateInput {
+  user: UserCreateOneWithoutSessionsInput;
+  name?: String;
+  exercises?: ExerciseCreateManyWithoutSessionInput;
+}
+
+export interface SetUpdateInput {
+  exercise?: ExerciseUpdateOneRequiredWithoutSetsInput;
+  setNo?: Int;
+  reps?: Int;
+  weight?: String;
+}
+
+export interface ExerciseCreateManyWithoutSessionInput {
+  create?:
+    | ExerciseCreateWithoutSessionInput[]
+    | ExerciseCreateWithoutSessionInput;
+  connect?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
+}
+
+export interface SessionCreateWithoutExercisesInput {
+  user: UserCreateOneWithoutSessionsInput;
+  name?: String;
+}
+
+export interface ExerciseCreateWithoutSessionInput {
+  name: String;
+  sets?: SetCreateManyWithoutExerciseInput;
+}
+
+export interface SessionUpdateWithoutUserDataInput {
+  name?: String;
+  exercises?: ExerciseUpdateManyWithoutSessionInput;
+}
+
+export interface ExerciseUpdateWithoutSessionDataInput {
+  name?: String;
+  sets?: SetUpdateManyWithoutExerciseInput;
+}
+
+export interface ExerciseUpdateWithWhereUniqueWithoutSessionInput {
+  where: ExerciseWhereUniqueInput;
+  data: ExerciseUpdateWithoutSessionDataInput;
+}
+
+export interface ExerciseUpdateManyWithoutSessionInput {
+  create?:
+    | ExerciseCreateWithoutSessionInput[]
+    | ExerciseCreateWithoutSessionInput;
+  delete?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
+  connect?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
+  disconnect?: ExerciseWhereUniqueInput[] | ExerciseWhereUniqueInput;
+  update?:
+    | ExerciseUpdateWithWhereUniqueWithoutSessionInput[]
+    | ExerciseUpdateWithWhereUniqueWithoutSessionInput;
+  upsert?:
+    | ExerciseUpsertWithWhereUniqueWithoutSessionInput[]
+    | ExerciseUpsertWithWhereUniqueWithoutSessionInput;
+}
+
+export interface SessionUpdateInput {
+  user?: UserUpdateOneRequiredWithoutSessionsInput;
+  name?: String;
+  exercises?: ExerciseUpdateManyWithoutSessionInput;
+}
+
+export interface UserUpdateInput {
+  name?: String;
+  email?: String;
+  password?: String;
+  sessions?: SessionUpdateManyWithoutUserInput;
+}
 
 export interface SessionSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
@@ -677,6 +805,24 @@ export interface SessionSubscriptionWhereInput {
   AND?: SessionSubscriptionWhereInput[] | SessionSubscriptionWhereInput;
   OR?: SessionSubscriptionWhereInput[] | SessionSubscriptionWhereInput;
   NOT?: SessionSubscriptionWhereInput[] | SessionSubscriptionWhereInput;
+}
+
+export interface ExerciseCreateInput {
+  session: SessionCreateOneWithoutExercisesInput;
+  name: String;
+  sets?: SetCreateManyWithoutExerciseInput;
+}
+
+export interface ExerciseUpdateWithoutSetsDataInput {
+  session?: SessionUpdateOneRequiredWithoutExercisesInput;
+  name?: String;
+}
+
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
+  sessions?: SessionCreateManyWithoutUserInput;
 }
 
 export interface NodeNode {
@@ -711,20 +857,42 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Session {
+export interface SessionConnection {}
+
+export interface SessionConnectionPromise
+  extends Promise<SessionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<SessionEdge>>() => T;
+  aggregate: <T = AggregateSession>() => T;
+}
+
+export interface SessionConnectionSubscription
+  extends Promise<AsyncIterator<SessionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SessionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSessionSubscription>() => T;
+}
+
+export interface User {
   id: ID_Output;
+  createdAt: DateTimeOutput;
   name: String;
-  date: DateTimeOutput;
+  email: String;
+  password: String;
 }
 
-export interface SessionPromise extends Promise<Session>, Fragmentable {
+export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
-  date: () => Promise<DateTimeOutput>;
-  exercises: <T = FragmentableArray<Exercise>>(
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  sessions: <T = FragmentableArray<Session>>(
     args?: {
-      where?: ExerciseWhereInput;
-      orderBy?: ExerciseOrderByInput;
+      where?: SessionWhereInput;
+      orderBy?: SessionOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -734,16 +902,18 @@ export interface SessionPromise extends Promise<Session>, Fragmentable {
   ) => T;
 }
 
-export interface SessionSubscription
-  extends Promise<AsyncIterator<Session>>,
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  exercises: <T = Promise<AsyncIterator<ExerciseSubscription>>>(
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  sessions: <T = Promise<AsyncIterator<SessionSubscription>>>(
     args?: {
-      where?: ExerciseWhereInput;
-      orderBy?: ExerciseOrderByInput;
+      where?: SessionWhereInput;
+      orderBy?: SessionOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -751,29 +921,6 @@ export interface SessionSubscription
       last?: Int;
     }
   ) => T;
-}
-
-export interface Set {
-  id: ID_Output;
-  setNo: Int;
-  reps: Int;
-  weight: String;
-}
-
-export interface SetPromise extends Promise<Set>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  setNo: () => Promise<Int>;
-  reps: () => Promise<Int>;
-  weight: () => Promise<String>;
-}
-
-export interface SetSubscription
-  extends Promise<AsyncIterator<Set>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  setNo: () => Promise<AsyncIterator<Int>>;
-  reps: () => Promise<AsyncIterator<Int>>;
-  weight: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateExercise {
@@ -790,72 +937,6 @@ export interface AggregateExerciseSubscription
   extends Promise<AsyncIterator<AggregateExercise>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserEdge {
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = User>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ExerciseConnection {}
-
-export interface ExerciseConnectionPromise
-  extends Promise<ExerciseConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<ExerciseEdge>>() => T;
-  aggregate: <T = AggregateExercise>() => T;
-}
-
-export interface ExerciseConnectionSubscription
-  extends Promise<AsyncIterator<ExerciseConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ExerciseEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateExerciseSubscription>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface ExerciseEdge {
@@ -876,48 +957,45 @@ export interface ExerciseEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserConnection {}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUser>() => T;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  count: () => Promise<Long>;
 }
 
-export interface User {
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface SetPreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  name: String;
-  email: String;
-  password: String;
+  setNo: Int;
+  reps: Int;
+  weight: String;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface SetPreviousValuesPromise
+  extends Promise<SetPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
+  setNo: () => Promise<Int>;
+  reps: () => Promise<Int>;
+  weight: () => Promise<String>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface SetPreviousValuesSubscription
+  extends Promise<AsyncIterator<SetPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
+  setNo: () => Promise<AsyncIterator<Int>>;
+  reps: () => Promise<AsyncIterator<Int>>;
+  weight: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SetSubscriptionPayload {
@@ -943,6 +1021,107 @@ export interface SetSubscriptionPayloadSubscription
   previousValues: <T = SetPreviousValuesSubscription>() => T;
 }
 
+export interface UserEdge {
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = User>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Session {
+  id: ID_Output;
+  name: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface SessionPromise extends Promise<Session>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = User>() => T;
+  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  exercises: <T = FragmentableArray<Exercise>>(
+    args?: {
+      where?: ExerciseWhereInput;
+      orderBy?: ExerciseOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface SessionSubscription
+  extends Promise<AsyncIterator<Session>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = UserSubscription>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  exercises: <T = Promise<AsyncIterator<ExerciseSubscription>>>(
+    args?: {
+      where?: ExerciseWhereInput;
+      orderBy?: ExerciseOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface ExerciseConnection {}
+
+export interface ExerciseConnectionPromise
+  extends Promise<ExerciseConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<ExerciseEdge>>() => T;
+  aggregate: <T = AggregateExercise>() => T;
+}
+
+export interface ExerciseConnectionSubscription
+  extends Promise<AsyncIterator<ExerciseConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ExerciseEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateExerciseSubscription>() => T;
+}
+
 export interface SetEdge {
   cursor: String;
 }
@@ -966,6 +1145,7 @@ export interface Exercise {
 
 export interface ExercisePromise extends Promise<Exercise>, Fragmentable {
   id: () => Promise<ID_Output>;
+  session: <T = Session>() => T;
   name: () => Promise<String>;
   sets: <T = FragmentableArray<Set>>(
     args?: {
@@ -984,6 +1164,7 @@ export interface ExerciseSubscription
   extends Promise<AsyncIterator<Exercise>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  session: <T = SessionSubscription>() => T;
   name: () => Promise<AsyncIterator<String>>;
   sets: <T = Promise<AsyncIterator<SetSubscription>>>(
     args?: {
@@ -1037,24 +1218,6 @@ export interface ExerciseSubscriptionPayloadSubscription
   previousValues: <T = ExercisePreviousValuesSubscription>() => T;
 }
 
-export interface SessionConnection {}
-
-export interface SessionConnectionPromise
-  extends Promise<SessionConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfo>() => T;
-  edges: <T = FragmentableArray<SessionEdge>>() => T;
-  aggregate: <T = AggregateSession>() => T;
-}
-
-export interface SessionConnectionSubscription
-  extends Promise<AsyncIterator<SessionConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SessionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSessionSubscription>() => T;
-}
-
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   updatedFields?: String[];
@@ -1078,10 +1241,28 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
+export interface UserConnection {}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfo>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUser>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
 export interface SessionPreviousValues {
   id: ID_Output;
   name: String;
-  date: DateTimeOutput;
+  createdAt: DateTimeOutput;
 }
 
 export interface SessionPreviousValuesPromise
@@ -1089,7 +1270,7 @@ export interface SessionPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  date: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface SessionPreviousValuesSubscription
@@ -1097,7 +1278,7 @@ export interface SessionPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface SessionSubscriptionPayload {
@@ -1123,27 +1304,29 @@ export interface SessionSubscriptionPayloadSubscription
   previousValues: <T = SessionPreviousValuesSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface Set {
+  id: ID_Output;
+  setNo: Int;
+  reps: Int;
+  weight: String;
 }
 
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
+export interface SetPromise extends Promise<Set>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  exercise: <T = Exercise>() => T;
+  setNo: () => Promise<Int>;
+  reps: () => Promise<Int>;
+  weight: () => Promise<String>;
 }
 
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface SetSubscription
+  extends Promise<AsyncIterator<Set>>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  exercise: <T = ExerciseSubscription>() => T;
+  setNo: () => Promise<AsyncIterator<Int>>;
+  reps: () => Promise<AsyncIterator<Int>>;
+  weight: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ExercisePreviousValues {
@@ -1181,29 +1364,20 @@ export interface AggregateSetSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface SetPreviousValues {
-  id: ID_Output;
-  setNo: Int;
-  reps: Int;
-  weight: String;
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface SetPreviousValuesPromise
-  extends Promise<SetPreviousValues>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  setNo: () => Promise<Int>;
-  reps: () => Promise<Int>;
-  weight: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface SetPreviousValuesSubscription
-  extends Promise<AsyncIterator<SetPreviousValues>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  setNo: () => Promise<AsyncIterator<Int>>;
-  reps: () => Promise<AsyncIterator<Int>>;
-  weight: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface SessionEdge {
@@ -1241,10 +1415,9 @@ export interface SetConnectionSubscription
 }
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Int = number;
 
 export type Long = string;
 
@@ -1252,11 +1425,6 @@ export type Long = string;
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
 
 /*
 DateTime scalar input type, allowing Date
@@ -1267,6 +1435,12 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.

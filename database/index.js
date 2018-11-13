@@ -4,13 +4,27 @@ const { prisma } = require('./generated/prisma-client')
 const _db = {
   // db functions
   User: {
+    byId: (id) => prisma.user({ id }),
     byEmail: (email) => prisma.user({ email }),
     create: (name, email, password) => prisma.createUser({ name, email, password })
+  },
+  Session: {
+    byId: (id) => prisma.session({ id }),
+    create: (name, userId) => prisma.createSession(
+      {
+        name,
+        user: {
+          connect: {
+            id: userId
+          }
+        }
+      })
   }
 }
 
 const User = {
   // actions
+  sessions: (id) => _db.User.byId(id).sessions(),
   register: async (name, email, plainPassword) => {
     try {
       const cryptPassword = await bcrypt.hash(plainPassword, 10)
@@ -33,4 +47,15 @@ const User = {
   }
 }
 
-module.exports = { User }
+const Session = {
+  get: (sessionId) => _db.Session.byId(sessionId),
+  create: async (name, userId) => {
+    try {
+      return await _db.Session.create(name, userId)
+    } catch (e) {
+      return false
+    }
+  }
+}
+
+module.exports = { User, Session }
